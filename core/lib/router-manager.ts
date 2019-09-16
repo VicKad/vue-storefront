@@ -12,8 +12,10 @@ const RouterManager = {
         (registeredRoute) => registeredRoute.name === route.name && registeredRoute.path === route.path
       ) === -1
     )
-    this._registeredRoutes.push(...uniqueRoutes)
-    router.addRoutes(uniqueRoutes)
+    if (uniqueRoutes.length > 0) {
+      this._registeredRoutes.push(...uniqueRoutes)
+      router.addRoutes(uniqueRoutes)
+    }
   },
   addDispatchCallback: function (callback: Function) {
     this._callbacks.push(callback)
@@ -21,8 +23,8 @@ const RouterManager = {
   findByName: function (name: string): RouteConfig {
     return this._registeredRoutes.find(r => r.name === name)
   },
-  findByPath: function (fullPath: string): RouteConfig {
-    return this._registeredRoutes.find(r => r.fullPath === fullPath)
+  findByPath: function (path: string): RouteConfig {
+    return this._registeredRoutes.find(r => r.path === path)
   },
   lockRoute: function () {
     let resolver
